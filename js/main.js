@@ -1,5 +1,5 @@
 const API_BASE_RAW = 'http://prem-eu4.bot-hosting.net:20940';
-const CF_WORKER = 'https://rickware-proxy.YOUR-SUBDOMAIN.workers.dev';
+const CF_WORKER = 'https://withered-grass-51d8.reissdonavan.workers.dev';
 function apiUrl(path) {
     if (window.location.protocol === 'https:') {
         return CF_WORKER + path;
