@@ -2210,6 +2210,24 @@ body {
     box-shadow: 0 0 16px rgba(150,0,220,0.25);
 }
 
+.account-type-badge-widget {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(22,5,40,0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 20px;
+    padding: 5px 13px;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    letter-spacing: 0.03em;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: default;
+    white-space: nowrap;
+}
+
 /* === BANK PAGE === */
 .bank-page {
     max-width: 1000px;

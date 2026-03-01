@@ -953,6 +953,28 @@ async function loadConfig() {
     return config;
 }
 
+async function fetchFullUser(token) {
+    try {
+        var res = await fetch(apiUrl('/api/user'), {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (res.ok) {
+            return await res.json();
+        }
+    } catch(e) {}
+    return null;
+}
+
+async function getCurrentUser() {
+    var token = sessionStorage.getItem('rickware_token');
+    if (!token) return null;
+    try {
+        var stored = sessionStorage.getItem('rickware_user');
+        if (stored) return JSON.parse(stored);
+    } catch(e) {}
+    return null;
+}
+
 async function checkLoginStatus() {
     var authButtons = document.getElementById('authButtons');
     var userProfileBtn = document.getElementById('userProfileBtn');
@@ -962,8 +984,20 @@ async function checkLoginStatus() {
             var parts = token.split('.');
             if (parts.length === 3) {
                 var decoded = JSON.parse(atob(parts[1]));
-                currentUser = decoded;
-                updateUserProfile(decoded);
+                var fullUser = await fetchFullUser(token);
+                if (fullUser) {
+                    sessionStorage.setItem('rickware_user', JSON.stringify(fullUser));
+                    currentUser = fullUser;
+                    updateUserProfile(fullUser);
+                } else {
+                    var stored = sessionStorage.getItem('rickware_user');
+                    var mergedUser = decoded;
+                    if (stored) {
+                        try { mergedUser = Object.assign({}, decoded, JSON.parse(stored)); } catch(e) {}
+                    }
+                    currentUser = mergedUser;
+                    updateUserProfile(mergedUser);
+                }
                 if (authButtons) authButtons.style.display = 'none';
                 if (userProfileBtn) userProfileBtn.style.display = 'flex';
                 return;
@@ -993,9 +1027,24 @@ function updateUserProfile(user) {
         el.textContent = user.account_type || 'User';
         el.setAttribute('style', getAccountTypeBadgeStyle(user.account_type));
     });
+    var profileSrc = '';
+    if (user.profile_picture) {
+        profileSrc = './images/' + user.profile_picture;
+    } else if (user.username) {
+        profileSrc = './images/' + user.username + '/' + user.username + '.png';
+    }
     document.querySelectorAll('#profileImage, #profileImageLarge').forEach(function(img) {
-        img.src = user.profile_picture || '';
+        img.src = profileSrc;
     });
+    var coins = user.user_discord_user_coin_amount;
+    if (coins !== undefined && coins !== null) {
+        setLabCoinsBalance(coins);
+    }
+    var badge = document.getElementById('accountTypeBadge');
+    if (badge) {
+        badge.textContent = user.account_type || 'User';
+        badge.setAttribute('style', getAccountTypeBadgeStyle(user.account_type) + 'display:inline-flex;');
+    }
 }
 
 async function loginUser(usernameOrEmail, password) {
@@ -1009,6 +1058,11 @@ async function loginUser(usernameOrEmail, password) {
             var data = await res.json();
             sessionStorage.setItem('rickware_token', data.token);
             var decoded = JSON.parse(atob(data.token.split('.')[1]));
+            var fullUser = await fetchFullUser(data.token);
+            if (fullUser) {
+                sessionStorage.setItem('rickware_user', JSON.stringify(fullUser));
+                return fullUser;
+            }
             sessionStorage.setItem('rickware_user', JSON.stringify(decoded));
             return decoded;
         } else {
@@ -1863,8 +1917,10 @@ function setupProfileSidebar() {
             currentUser = null;
             var ab = document.getElementById('authButtons');
             var up = document.getElementById('userProfileBtn');
+            var atb = document.getElementById('accountTypeBadge');
             if (ab) ab.style.display = 'flex';
             if (up) up.style.display = 'none';
+            if (atb) atb.style.display = 'none';
             window.location.reload();
         });
     }
