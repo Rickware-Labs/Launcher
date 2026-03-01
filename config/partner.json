@@ -1,0 +1,52 @@
+{
+  "partners": [
+    {
+      "id": 1,
+      "title": "• Quantum Hub",
+      "description": "Professional Cheats • Automated Software",
+      "banner": "Top #1 PARTNER",
+      "preview_image_url": "quantum_hub_large_animated_server_banner_winter.gif",
+      "owner_name": "drakko5.56",
+      "discord_url": "https://discord.gg/6jpHJ8bEKP",
+      "discord_url_2": "https://discord.gg/QaUA5fmcCM",
+      "website_url": "https://driizzyy.github.io/quantum-hub/",
+      "github_url": "https://github.com/driizzyy",
+      "tiktok_url": "",
+      "instagram_url": ""
+    },
+    {
+      "id": 2,
+      "title": "• ByteBunny Self-Bot  -  (BETA)",
+      "description": "Cross-platform Next Level Discord Self-Bot including its own AI & 300+ features",
+      "banner": "Our Discord Self-Bot",
+      "preview_image_url": "bytebunny_selfbot_large_animated_server_banner.gif",
+      "owner_name": "drakko5.56  &  .rick.c137",
+      "discord_url": "https://discord.gg/Bu72nAR7QU",
+      "discord_url_2": "",
+      "website_url": "https://bytebunnyselfbot.com/",
+      "github_url": "",
+      "tiktok_url": "",
+      "instagram_url": ""
+    }
+  ],
+  "partners_list": [
+    {
+      "id": 0,
+      "preview_image_url": "r_l_logo_1.gif",
+      "owner_name": ".rick.c137",
+      "discord_url": "https://discord.gg/Wk7d8mJgyN"
+    },
+    {
+      "id": 1,
+      "preview_image_url": "drakko5.56_profile_picture.webp",
+      "owner_name": "drakko5.56",
+      "discord_url": "https://discord.gg/6jpHJ8bEKP"
+    },
+    {
+      "id": 2,
+      "preview_image_url": "bytebunny_selfbot_large_animated_server_banner.gif",
+      "owner_name": "ByteBunny",
+      "discord_url": "https://discord.gg/Bu72nAR7QU"
+    }
+  ]
+}
