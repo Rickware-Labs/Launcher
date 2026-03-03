@@ -1,0 +1,34 @@
+{
+  "q_and_a_content": [
+    {
+      "id": 1,
+      "title": "How do I purchase a product?",
+      "description": "All purchases are handled manually through our Discord server. Join the server, open a support ticket, and a staff member will assist you with your purchase."
+    },
+    {
+      "id": 2,
+      "title": "What payment methods do you accept?",
+      "description": "We currently accept Bitcoin (BTC), Solana (SOL), Amazon Vouchers (EUR only), and Paysafecard (EUR only). More payment options including PayPal and credit cards are coming soon."
+    },
+    {
+      "id": 3,
+      "title": "Are the free tools really free?",
+      "description": "Yes! Free tools are hosted on GitHub and are completely free to use. You can download them directly from the product page without any payment or account required."
+    },
+    {
+      "id": 4,
+      "title": "How does Auto Update work?",
+      "description": "When Auto Update is enabled, the launcher will automatically download and apply the latest updates for your installed products without requiring any manual action."
+    },
+    {
+      "id": 5,
+      "title": "What is the Closed Beta?",
+      "description": "The Closed Beta gives selected users early access to new features and tools. Beta testers who participate will receive a permanent Unlock All account granting lifetime access to all tools on the platform."
+    },
+    {
+      "id": 6,
+      "title": "How do coupon codes work?",
+      "description": "Coupon codes can be entered in the product purchase modal or at checkout to receive a discount. Codes are distributed through our Discord server and promotional events."
+    }
+  ]
+}
