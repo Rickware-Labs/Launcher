@@ -2205,17 +2205,18 @@ async function loadPartners() {
 }
 
 function initAuthPage() {
-    var authLogoEl = document.querySelector('.auth-logo');
-    if (authLogoEl) {
-        authLogoEl.src = '../images/main/r_l_logo_1.gif';
-        authLogoEl.onerror = function() { this.style.display = 'none'; };
-    }
-
+    var authTabs = document.querySelectorAll('.auth-tab');
     var loginForm = document.getElementById('login-form');
     var registerForm = document.getElementById('register-form');
     var sliderTrack = document.getElementById('authSliderTrack');
     var tabIndicator = document.getElementById('authTabIndicator');
     var params = new URLSearchParams(window.location.search);
+
+    var authLogoEl = document.querySelector('.auth-logo');
+    if (authLogoEl) {
+        authLogoEl.src = '../images/main/r_l_logo_1.gif';
+        authLogoEl.onerror = function() { this.style.display = 'none'; };
+    }
 
     function switchTab(tabName) {
         authTabs.forEach(function(t) { t.classList.remove('active'); });
