@@ -1001,6 +1001,16 @@ function getAccountData() {
 async function checkLoginStatus() {
     var authButtons = document.getElementById('authButtons');
     var userProfileBtn = document.getElementById('userProfileBtn');
+    if (!sessionStorage.getItem('rickware_token') && localStorage.getItem('rickware_remember_me') === '1') {
+        var lsToken = localStorage.getItem('rickware_token');
+        if (lsToken) {
+            sessionStorage.setItem('rickware_token', lsToken);
+            var lsUser = localStorage.getItem('rickware_user');
+            if (lsUser) sessionStorage.setItem('rickware_user', lsUser);
+            var lsRefresh = localStorage.getItem('rickware_refresh_token');
+            if (lsRefresh) sessionStorage.setItem('rickware_refresh_token', lsRefresh);
+        }
+    }
     var token = sessionStorage.getItem('rickware_token');
     if (token) {
         try {
@@ -2769,6 +2779,11 @@ function setupProfileSidebar() {
                 } catch(e) {}
             }
             sessionStorage.clear();
+            localStorage.removeItem('rickware_remember_me');
+            localStorage.removeItem('rickware_token');
+            localStorage.removeItem('rickware_refresh_token');
+            localStorage.removeItem('rickware_user');
+            localStorage.removeItem('rickware_saved_username');
             currentUser = null;
             var ab = document.getElementById('authButtons');
             var up = document.getElementById('userProfileBtn');
