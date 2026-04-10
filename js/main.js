@@ -955,6 +955,16 @@ function updateCartBadge() {
     if (badge) badge.textContent = cart.length;
 }
 
+async function loadConfig() {
+    try {
+        var res = await fetch('./config/config.json');
+        if (res.ok) config = await res.json();
+    } catch(e) {
+        config = {};
+    }
+    return config;
+}
+
 async function fetchFullUser(token) {
     try {
         var res = await fetch(apiUrl('/api/user'), {
