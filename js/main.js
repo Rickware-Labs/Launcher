@@ -3228,6 +3228,77 @@ function getPartnerImageUrl(url) {
     return './images/partner/' + trimmed;
 }
 
+async function loadNews() {
+    var grid = document.getElementById('newsGrid');
+    if (!grid) return;
+    var data = null;
+    var paths = ['./config/news.json', './news.json'];
+    for (var i = 0; i < paths.length; i++) {
+        try {
+            var res = await fetch(paths[i]);
+            if (res.ok) { data = await res.json(); break; }
+        } catch(e) {}
+    }
+    if (!data || !data.q_and_a_content || data.q_and_a_content.length === 0) {
+        grid.innerHTML = '<div class="empty-state">No news available.</div>';
+        return;
+    }
+    var items = data.q_and_a_content.slice().sort(function(a, b) { return a.id - b.id; });
+    var html = '';
+    items.forEach(function(item, idx) {
+        var badge = item.badge || '';
+        var badgeColor = item.badge_color || '#63008a';
+        var type = item.type || '';
+        var title = item.title || '';
+        var description = item.description || '';
+        var author = item.author || '';
+        var published = item['published:'] || item.published || '';
+        var isNew = badge.toLowerCase() === 'new info';
+        if (isNew) {
+            html += '<div class="news-card news-card-featured" style="grid-column:1/-1;">';
+        } else {
+            html += '<div class="news-card">';
+        }
+        html += '<div class="news-card-badge" style="background:' + escHtml(badgeColor) + ';">' + escHtml(badge) + '</div>';
+        html += '<div class="news-card-meta">';
+        if (published) html += '<span class="news-date">' + escHtml(published) + '</span>';
+        if (type) html += '<span class="news-category">' + escHtml(type) + '</span>';
+        html += '</div>';
+        html += '<h2 class="news-card-title"><span class="shiny-text-js" style="background-image:linear-gradient(120deg,#c97eff 35%,#ffffff 50%,#c97eff 65%);">' + escHtml(title) + '</span></h2>';
+        html += '<p class="news-card-body">' + escHtml(description) + '</p>';
+        if (author) html += '<div class="news-card-footer"><span class="news-author">by ' + escHtml(author) + '</span></div>';
+        html += '</div>';
+    });
+    grid.innerHTML = html;
+    applyShinyTextToEls();
+}
+
+async function loadQA() {
+    var list = document.getElementById('qaList');
+    if (!list) return;
+    var data = null;
+    var paths = ['./config/q_&_a.json', './config/q_a.json', './config/qa.json', './q_a.json'];
+    for (var i = 0; i < paths.length; i++) {
+        try {
+            var res = await fetch(paths[i]);
+            if (res.ok) { data = await res.json(); break; }
+        } catch(e) {}
+    }
+    if (!data || !data.q_and_a_content || data.q_and_a_content.length === 0) {
+        list.innerHTML = '<div class="empty-state">No Q&amp;A available.</div>';
+        return;
+    }
+    var items = data.q_and_a_content.slice().sort(function(a, b) { return a.id - b.id; });
+    var html = '';
+    items.forEach(function(item) {
+        html += '<div class="qa-item">';
+        html += '<button class="qa-toggle"><span>' + escHtml(item.title || '') + '</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>';
+        html += '<div class="qa-answer">' + escHtml(item.description || '') + '</div>';
+        html += '</div>';
+    });
+    list.innerHTML = html;
+}
+
 async function loadGithubTab() {
     var grid = document.getElementById('githubGrid');
     var listStrip = document.getElementById('githubListStrip');
